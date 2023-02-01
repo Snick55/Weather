@@ -3,7 +3,7 @@ package com.snick.weather.currentWeather.domain
 import java.lang.Exception
 
 
-class WeatherApiException(message: String): Exception(message)
+data class WeatherApiException(override val message: String): Exception(message)
 
 open class ApplicationExceptions(message: String = ""): Exception(message)
 

@@ -5,23 +5,23 @@ import com.snick.weather.core.Weather
 
 data class WeatherCloud(
     @SerializedName("clouds")
-    val clouds: Clouds,
+    val clouds: Clouds = Clouds(0),
     @SerializedName("cod")
-    val RequestCode: Int,
+    val requestCode: Int = 0,
     @SerializedName("main")
-    val main: Main,
+    val main: Main = Main(0.0,0,0,0.0),
     @SerializedName("name")
-    val name: String,
+    val name: String = "",
     @SerializedName("visibility")
-    val visibility: Int,
+    val visibility: Int = 0,
     @SerializedName("weather")
-    val weatherDescription: List<WeatherDescription>,
+    val weatherDescription: List<WeatherDescription> = emptyList(),
     @SerializedName("wind")
-    val wind: Wind,
+    val wind: Wind = Wind(0.0),
     @SerializedName("message")
-    val errorMessage: String
+    val errorMessage: String = ""
 ) {
-    fun isSuccess() = RequestCode == 200
+    fun isSuccess() = requestCode == 200
 
     fun map() = Weather(
         clouds.cloudiness,
