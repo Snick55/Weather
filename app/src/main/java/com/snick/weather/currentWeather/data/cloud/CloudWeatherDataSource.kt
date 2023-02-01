@@ -1,5 +1,6 @@
 package com.snick.weather.currentWeather.data.cloud
 
+import com.snick.weather.currentWeather.domain.WeatherApiException
 import com.snick.weather.currentWeather.data.WeatherData
 import java.lang.Exception
 
@@ -16,7 +17,7 @@ interface CloudWeatherDataSource {
                 val result = apiService.fetchCurrentWeather(city)
                 if (result.isSuccess()) {
                     WeatherData.Success(result.map())
-                } else WeatherData.Fail(Exception(result.errorMessage))
+                } else WeatherData.Fail(WeatherApiException(result.errorMessage))
             } catch (e: Exception) {
                 WeatherData.Fail(e)
             }
