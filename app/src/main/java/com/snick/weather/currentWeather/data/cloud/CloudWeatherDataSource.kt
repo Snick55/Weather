@@ -8,16 +8,18 @@ interface CloudWeatherDataSource {
     suspend fun fetchCurrentWeather(city: String): WeatherData
 
 
-    class Base(private val apiService: CurrentWeatherApiService): CloudWeatherDataSource{
+    class Base(
+        private val apiService: CurrentWeatherApiService,
+    ) : CloudWeatherDataSource {
         override suspend fun fetchCurrentWeather(city: String): WeatherData {
             return try {
                 val result = apiService.fetchCurrentWeather(city)
-                WeatherData.Success(result.map)
-
-            }catch (e: Exception){
+                if (result.isSuccess()) {
+                    WeatherData.Success(result.map())
+                } else WeatherData.Fail(Exception(result.errorMessage))
+            } catch (e: Exception) {
                 WeatherData.Fail(e)
             }
         }
     }
-
 }

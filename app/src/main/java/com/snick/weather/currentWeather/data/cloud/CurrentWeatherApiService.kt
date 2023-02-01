@@ -10,7 +10,7 @@ interface CurrentWeatherApiService {
     @GET("weather?q={city}&appid={key}&lang={lang}&units=metric")
     fun fetchCurrentWeather(
     @Path("city") city: String,
-    @Path("key") key: String = "37d34d4b86d03710f1f3318ce1223ee5",
+    @Path("key") key: String = "use api key here",
     @Path("lang") language: String = "ru"
     ): WeatherCloud
 

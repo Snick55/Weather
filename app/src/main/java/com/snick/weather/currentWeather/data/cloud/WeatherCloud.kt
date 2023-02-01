@@ -1,6 +1,7 @@
 package com.snick.weather.currentWeather.data.cloud
 
 import com.google.gson.annotations.SerializedName
+import com.snick.weather.core.Weather
 
 data class WeatherCloud(
     @SerializedName("clouds")
@@ -14,10 +15,26 @@ data class WeatherCloud(
     @SerializedName("visibility")
     val visibility: Int,
     @SerializedName("weather")
-    val weather: List<Weather>,
+    val weatherDescription: List<WeatherDescription>,
     @SerializedName("wind")
-    val wind: Wind
-)
+    val wind: Wind,
+    @SerializedName("message")
+    val errorMessage: String
+) {
+    fun isSuccess() = RequestCode == 200
+
+    fun map() = Weather(
+        clouds.cloudiness,
+        main.feelsLike,
+        main.humidity,
+        main.temp,
+        main.pressure,
+        name,
+        visibility,
+        weatherDescription[0].description,
+        wind.speed,
+    )
+}
 
 data class Clouds(
     @SerializedName("all")
@@ -36,7 +53,7 @@ data class Main(
     val temp: Double
 )
 
-data class Weather(
+data class WeatherDescription(
     @SerializedName("description")
     val description: String
 )
