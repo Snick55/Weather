@@ -24,7 +24,7 @@ interface WeatherDataToDomainMapper {
         override fun map(exception: Exception): WeatherDomain {
           val applicationException =  when (exception){
                 is UnknownHostException ->  NoInternetConnectionException()
-                is WeatherApiException ->  ServiceUnavailableException(exception.message?:"")
+                is WeatherApiException ->  ServiceUnavailableException(exception.message)
               else -> ServiceUnavailableException("something went wrong")
           }
             return WeatherDomain.Fail(applicationException)
