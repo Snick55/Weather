@@ -2,7 +2,6 @@ package com.snick.weather.currentWeather.data
 
 import com.snick.weather.core.Weather
 import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSource
-import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSourceTest
 import com.snick.weather.currentWeather.domain.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
