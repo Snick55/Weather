@@ -2,4 +2,6 @@
     <string name="app_name">Weather</string>
     <string name="no_no_internet_connection">Проверьте соединение с интернетом</string>
     <string name="something_went_wrong">Что то пошло не так</string>
+    <string name="action_accept">Подтвердить</string>
+    <string name="your_city">Ваш город</string>
 </resources>
