@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 
 import com.snick.weather.currentWeather.domain.WeatherDomainToUiMapper
 import com.snick.weather.currentWeather.domain.WeatherInteractor
-import com.snick.weather.currentWeather.presentation.WeatherUi
+import com.snick.weather.currentWeather.presentation.CurrentWeatherUi
 import kotlinx.coroutines.launch
 
 class WeatherViewModel(
@@ -15,8 +15,8 @@ class WeatherViewModel(
     private val mapper: WeatherDomainToUiMapper
 ): ViewModel() {
 
-    private val _state = MutableLiveData<WeatherUi>(WeatherUi.Loading())
-    val state: LiveData<WeatherUi> = _state
+    private val _state = MutableLiveData<CurrentWeatherUi>(CurrentWeatherUi.Loading())
+    val state: LiveData<CurrentWeatherUi> = _state
 
     fun fetchWeather(city: String) = viewModelScope.launch {
         val res = interactor.fetchWeather(city)

@@ -1,22 +1,27 @@
 package com.snick.weather.currentWeather.domain
 
+import com.snick.weather.currentWeather.presentation.WeatherUi
 
-import com.snick.weather.core.Weather
-
-
-interface WeatherDomain {
-
-    fun <T> map(mapper: WeatherDomainToUiMapper): T
-
-    data class Success(private val weather: Weather): WeatherDomain{
-        override fun <T> map(mapper: WeatherDomainToUiMapper): T {
-           return mapper.map(weather) as T
-        }
-    }
-
-    data class Fail(private val e: ApplicationExceptions):WeatherDomain{
-        override fun <T> map(mapper: WeatherDomainToUiMapper): T {
-           return mapper.map(e) as T
-        }
-    }
+data class WeatherDomain(
+    private val cloudiness: Int,
+    private val feelsLike: Double,
+    private val humidity: Int,
+    private val temp: Double,
+    private val pressure: Int,
+    private val name: String,
+    private val visibility: Int,
+    private val weatherDescription: String,
+    private val speed: Double
+) {
+    fun toUi() = WeatherUi(
+        cloudiness,
+        feelsLike,
+        humidity,
+        temp,
+        pressure,
+        name,
+        visibility,
+        weatherDescription,
+        speed
+    )
 }

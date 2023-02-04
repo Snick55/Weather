@@ -1,24 +1,16 @@
 package com.snick.weather.currentWeather.presentation
 
-import android.widget.TextView
-import com.snick.weather.core.Weather
-
-interface WeatherUi {
-
-    fun render(textView: TextView) = Unit
-
-
-
-    class Loading : WeatherUi
-    data class Success(private val weather: Weather) : WeatherUi{
-        override fun render(textView: TextView) {
-            textView.text = "done"
-        }
-    }
-    data class Fail(private val errorMessage: String) : WeatherUi{
-        override fun render(textView: TextView) {
-            textView.text = errorMessage
-        }
-    }
+data class WeatherUi(
+     val cloudiness: Int,
+     val feelsLike: Double,
+     val humidity: Int,
+     val temp: Double,
+     val pressure: Int,
+     val name: String,
+     val visibility: Int,
+     val weatherDescription: String,
+     val speed: Double
+){
 
 }
+

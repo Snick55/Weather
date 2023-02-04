@@ -1,6 +1,6 @@
 package com.snick.weather.currentWeather.data.cloud
 
-import com.snick.weather.core.Weather
+import com.snick.weather.currentWeather.data.CurrentWeatherData
 import com.snick.weather.currentWeather.data.WeatherData
 import com.snick.weather.currentWeather.domain.WeatherApiException
 import kotlinx.coroutines.runBlocking
@@ -9,7 +9,7 @@ import org.junit.Test
 import java.lang.Exception
 import java.net.UnknownHostException
 
-class CloudWeatherDataSourceTest {
+class CloudCurrentWeatherDataDataSourceTest {
 
     private val exception = UnknownHostException()
     private val weatherApiError = WeatherApiException("no such city")
@@ -21,8 +21,8 @@ class CloudWeatherDataSourceTest {
 
         val actual = cloudWeatherDataSource.fetchCurrentWeather("Moscow")
 
-        val expected = WeatherData.Success(
-            Weather(
+        val expected = CurrentWeatherData.Success(
+            WeatherData(
                 10, 5.0, 20,
                 3.1, 33, "Moscow", 25, "cloudy", 10.0
             )
@@ -38,8 +38,8 @@ class CloudWeatherDataSourceTest {
 
         val actual = cloudWeatherDataSource.fetchCurrentWeather("london")
 
-        val expected = WeatherData.Success(
-            Weather(
+        val expected = CurrentWeatherData.Success(
+            WeatherData(
                 10, 5.0, 20,
                 3.1, 33, "London", 25, "cloudy", 10.0
             )
@@ -55,8 +55,8 @@ class CloudWeatherDataSourceTest {
 
         val actual = cloudWeatherDataSource.fetchCurrentWeather("mOscOw")
 
-        val expected = WeatherData.Success(
-            Weather(
+        val expected = CurrentWeatherData.Success(
+            WeatherData(
                 10, 5.0, 20,
                 3.1, 33, "Moscow", 25, "cloudy", 10.0
             )
@@ -72,8 +72,8 @@ class CloudWeatherDataSourceTest {
 
         val actual = cloudWeatherDataSource.fetchCurrentWeather("Москва")
 
-        val expected = WeatherData.Success(
-            Weather(
+        val expected = CurrentWeatherData.Success(
+            WeatherData(
                 10, 5.0, 20,
                 3.1, 33, "Москва", 25, "cloudy", 10.0
             )
@@ -90,7 +90,7 @@ class CloudWeatherDataSourceTest {
 
         val actual = cloudWeatherDataSource.fetchCurrentWeather("Moscow")
 
-        val expected = WeatherData.Fail(exception)
+        val expected = CurrentWeatherData.Fail(exception)
 
         assertEquals(expected, actual)
     }
@@ -103,7 +103,7 @@ class CloudWeatherDataSourceTest {
 
         val actual = cloudWeatherDataSource.fetchCurrentWeather("Moscow")
 
-        val expected = WeatherData.Fail(weatherApiError)
+        val expected = CurrentWeatherData.Fail(weatherApiError)
 
         assertEquals(expected, actual)
     }
@@ -119,10 +119,11 @@ class CloudWeatherDataSourceTest {
             }
         }
 
-        override fun fetchCurrentWeather(
+        override suspend fun fetchCurrentWeather(
             city: String,
             key: String,
-            language: String
+            language: String,
+            units: String
         ): WeatherCloud {
             if (!isInternetOn) throw error
             return if (isSuccess) {
@@ -140,6 +141,7 @@ class CloudWeatherDataSourceTest {
                 WeatherCloud(requestCode = 400,errorMessage = "no such city")
 
         }
+
     }
 
 }

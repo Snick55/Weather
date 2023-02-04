@@ -4,4 +4,13 @@
     <string name="something_went_wrong">Что то пошло не так</string>
     <string name="action_accept">Подтвердить</string>
     <string name="your_city">Ваш город</string>
+    <string name="temp">Температура: %s °C</string>
+    <string name="feel_like">Ощущается как: %s °C</string>
+    <string name="humidity">Влажность: %s</string>
+    <string name="cloudiness">Облачность: %s</string>
+    <string name="pressure">Давление: %s мм РТ</string>
+    <string name="visibility">Видимость: %s метров</string>
+    <string name="speed">Скорость ветра: %s м/c</string>
+    <string name="try_again">Повторить</string>
+
 </resources>

@@ -1,6 +1,5 @@
 package com.snick.weather.currentWeather.data
 
-import com.snick.weather.core.Weather
 import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSource
 import com.snick.weather.currentWeather.domain.*
 import kotlinx.coroutines.runBlocking
@@ -9,7 +8,7 @@ import org.junit.Test
 import java.lang.Exception
 import java.net.UnknownHostException
 
-class CurrentWeatherRepositoryTest{
+class CurrentCurrentWeatherDataRepositoryTest{
 
     private val exception = UnknownHostException()
     private val weatherApiError = WeatherApiException("no such city")
@@ -25,10 +24,12 @@ class CurrentWeatherRepositoryTest{
         val repository = CurrentWeatherRepository.Base(cloudWeatherDataSource,mapper)
 
         val actual = repository.fetchCurrentWeather("London")
-        val expected = WeatherDomain.Success( Weather(
-            10, 5.0, 20,
-            3.1, 33, "London", 25, "cloudy", 10.0
-        ))
+        val expected = CurrentWeatherDomain.Success(
+            WeatherDomain(
+                10, 5.0, 20,
+                3.1, 33, "London", 25, "cloudy", 10.0
+            )
+        )
         assertEquals(expected, actual)
     }
 
@@ -40,7 +41,7 @@ class CurrentWeatherRepositoryTest{
         val repository = CurrentWeatherRepository.Base(cloudWeatherDataSource,mapper)
 
         val actual = repository.fetchCurrentWeather("London")
-        val expected = WeatherDomain.Fail(noInternetConnectionException)
+        val expected = CurrentWeatherDomain.Fail(noInternetConnectionException)
         assertEquals(expected, actual)
     }
 
@@ -53,7 +54,7 @@ class CurrentWeatherRepositoryTest{
         val repository = CurrentWeatherRepository.Base(cloudWeatherDataSource,mapper)
 
         val actual = repository.fetchCurrentWeather("London")
-        val expected = WeatherDomain.Fail(serviceUnavailableException)
+        val expected = CurrentWeatherDomain.Fail(serviceUnavailableException)
         assertEquals(expected, actual)
     }
 
@@ -61,13 +62,15 @@ class CurrentWeatherRepositoryTest{
 
     class CloudDataSourceTest(private val isSuccess: Boolean = true,private val exception: Exception):CloudWeatherDataSource {
 
-        override suspend fun fetchCurrentWeather(city: String): WeatherData {
+        override suspend fun fetchCurrentWeather(city: String): CurrentWeatherData {
           return  if (isSuccess){
-                 WeatherData.Success( Weather(
-                    10, 5.0, 20,
-                    3.1, 33, "London", 25, "cloudy", 10.0
-                ))
-            }else WeatherData.Fail(exception)
+              CurrentWeatherData.Success(
+                     WeatherData(
+                         10, 5.0, 20,
+                         3.1, 33, "London", 25, "cloudy", 10.0
+                     )
+                 )
+            }else CurrentWeatherData.Fail(exception)
         }
     }
 
@@ -75,17 +78,17 @@ class CurrentWeatherRepositoryTest{
     class DataToDomainMapper(
         private val appException: ApplicationExceptions
     ) : WeatherDataToDomainMapper{
-        override fun map(weather: Weather): WeatherDomain {
-           return WeatherDomain.Success(weather)
+        override fun map(weatherData: WeatherData): CurrentWeatherDomain {
+           return CurrentWeatherDomain.Success(weatherData.toDomain())
         }
 
-        override fun map(exception: Exception): WeatherDomain {
+        override fun map(exception: Exception): CurrentWeatherDomain {
             val applicationException =  when (exception){
                 is UnknownHostException ->  appException
                 is WeatherApiException ->  appException
                 else -> ServiceUnavailableException("something went wrong")
             }
-            return WeatherDomain.Fail(applicationException)
+            return CurrentWeatherDomain.Fail(applicationException)
         }
     }
 }

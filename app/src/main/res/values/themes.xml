@@ -13,4 +13,11 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    
+    <style name="customTextView" parent="@android:style/TextAppearance.Widget.TextView">
+        <item name="android:layout_gravity">start</item>
+        <item name="android:textColor">@color/purple_text</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
 </resources>

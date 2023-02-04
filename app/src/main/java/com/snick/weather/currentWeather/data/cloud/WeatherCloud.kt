@@ -1,7 +1,7 @@
 package com.snick.weather.currentWeather.data.cloud
 
 import com.google.gson.annotations.SerializedName
-import com.snick.weather.core.Weather
+import com.snick.weather.currentWeather.data.WeatherData
 
 data class WeatherCloud(
     @SerializedName("clouds")
@@ -23,7 +23,7 @@ data class WeatherCloud(
 ) {
     fun isSuccess() = requestCode == 200
 
-    fun map() = Weather(
+    fun map() = WeatherData(
         clouds.cloudiness,
         main.feelsLike,
         main.humidity,
