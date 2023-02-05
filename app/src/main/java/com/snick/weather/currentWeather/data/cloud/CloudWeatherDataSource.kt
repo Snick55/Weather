@@ -16,7 +16,6 @@ interface CloudWeatherDataSource {
         override suspend fun fetchCurrentWeather(city: String): CurrentWeatherData {
             return try {
                 val result = apiService.fetchCurrentWeather(city)
-                Log.d("TAG", "result from service =  $result")
                 if (result.isSuccess()) {
                     CurrentWeatherData.Success(result.map())
                 } else CurrentWeatherData.Fail(WeatherApiException(result.errorMessage))

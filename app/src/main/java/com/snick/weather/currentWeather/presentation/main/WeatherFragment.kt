@@ -15,6 +15,7 @@ class WeatherFragment : Fragment() {
 
     private lateinit var binding: WeatherFragmentBinding
     private lateinit var viewModel: WeatherViewModel
+    private lateinit var city: String
 
 
     override fun onCreateView(
@@ -23,9 +24,9 @@ class WeatherFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
-        val city = arguments?.getString(CITY_KEY)
+         city = arguments?.getString(CITY_KEY)?: ""
         viewModel = (requireContext().applicationContext as WeatherApp).weatherViewModel
-        viewModel.fetchWeather(city ?: "")
+        viewModel.fetchWeather(city)
         return binding.root
     }
 
@@ -33,7 +34,7 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val city = binding.cityNameTv
+        val cityTextView = binding.cityNameTv
         val temp = binding.temp
         val weatherDescription = binding.weatherDescription
         val feelsLike = binding.feelsLike
@@ -48,9 +49,10 @@ class WeatherFragment : Fragment() {
             when (it) {
                 is CurrentWeatherUi.Loading -> changeProgress(binding.progressBar)
                 is CurrentWeatherUi.Success -> {
+                    binding.iconGroup.visibility = View.VISIBLE
                     changeProgress(binding.progressBar)
                     it.render(
-                        city,
+                        cityTextView,
                         weatherDescription,
                         temp,
                         feelsLike,
@@ -62,8 +64,18 @@ class WeatherFragment : Fragment() {
                     )
 
                 }
-                else -> it.handleError(binding.errorMessage)
+                else -> {
+                    binding.errorContainer.visibility = View.VISIBLE
+                    changeProgress(binding.progressBar)
+                    it.handleError(binding.errorMessage)
+                }
             }
+        }
+
+        binding.tryAgainBtn.setOnClickListener {
+            changeProgress(binding.progressBar)
+            binding.errorContainer.visibility = View.GONE
+            viewModel.fetchWeather(city)
         }
 
     }

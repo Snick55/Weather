@@ -46,7 +46,7 @@ interface CurrentWeatherUi {
             humidity.text = resourceManager.getString(R.string.humidity,weatherUi.humidity.toString()+"%")
             cloudiness.text =resourceManager.getString(R.string.cloudiness,weatherUi.cloudiness.toString()+"%")
             pressure.text = resourceManager.getString(R.string.pressure,press.toString())
-            visibility.text = resourceManager.getString(R.string.visibility,weatherUi.visibility.toString()+"%")
+            visibility.text = resourceManager.getString(R.string.visibility,weatherUi.visibility.toString())
             speed.text = resourceManager.getString(R.string.speed,weatherUi.speed.toString())
         }
     }
