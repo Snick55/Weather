@@ -12,5 +12,6 @@
     <string name="visibility">Видимость: %s метров</string>
     <string name="speed">Скорость ветра: %s м/c</string>
     <string name="try_again">Повторить</string>
+    <string name="enter_new_city">Введите название города</string>
 
 </resources>

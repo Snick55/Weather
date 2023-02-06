@@ -1,5 +1,6 @@
 package com.snick.weather.currentWeather.presentation.main
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,9 @@ class WeatherFragment : Fragment() {
             when (it) {
                 is CurrentWeatherUi.Loading -> changeProgress(binding.progressBar)
                 is CurrentWeatherUi.Success -> {
+                    binding.contentTop.visibility = View.VISIBLE
+                    binding.content.visibility = View.VISIBLE
+                    binding.errorContainer.visibility = View.GONE
                     binding.iconGroup.visibility = View.VISIBLE
                     changeProgress(binding.progressBar)
                     it.render(
@@ -65,6 +69,9 @@ class WeatherFragment : Fragment() {
 
                 }
                 else -> {
+                    binding.contentTop.visibility = View.GONE
+                    binding.content.visibility = View.GONE
+                    binding.iconGroup.visibility = View.GONE
                     binding.errorContainer.visibility = View.VISIBLE
                     changeProgress(binding.progressBar)
                     it.handleError(binding.errorMessage)
@@ -76,6 +83,15 @@ class WeatherFragment : Fragment() {
             changeProgress(binding.progressBar)
             binding.errorContainer.visibility = View.GONE
             viewModel.fetchWeather(city)
+        }
+
+        binding.changeCityBtn.setOnClickListener {
+            val dialogBuilder = AlertDialog.Builder(requireContext())
+            DialogManager.changePass(dialogBuilder){
+                if (it.isBlank()) return@changePass
+                viewModel.fetchWeather(it)
+                    changeProgress(binding.progressBar)
+            }
         }
 
     }
