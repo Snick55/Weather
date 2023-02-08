@@ -5,6 +5,8 @@ import com.snick.weather.currentWeather.data.CurrentWeatherRepository
 import com.snick.weather.currentWeather.data.WeatherDataToDomainMapper
 import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSource
 import com.snick.weather.currentWeather.data.cloud.CurrentWeatherApiService
+import com.snick.weather.currentWeather.di.AppComponent
+import com.snick.weather.currentWeather.di.DaggerAppComponent
 import com.snick.weather.currentWeather.domain.WeatherDomainToUiMapper
 import com.snick.weather.currentWeather.domain.WeatherInteractor
 import com.snick.weather.currentWeather.presentation.main.WeatherViewModel
@@ -16,9 +18,11 @@ import retrofit2.converter.gson.GsonConverterFactory
 class WeatherApp: Application() {
 
   lateinit var weatherViewModel: WeatherViewModel
+    lateinit var appComponent: AppComponent
 
-    override fun onCreate() {
+            override fun onCreate() {
         super.onCreate()
+                appComponent = DaggerAppComponent.create()
         val resourceManager = ResourceManager.Base(this)
         val interceptor = HttpLoggingInterceptor()
         interceptor.setLevel(HttpLoggingInterceptor.Level.BODY)
