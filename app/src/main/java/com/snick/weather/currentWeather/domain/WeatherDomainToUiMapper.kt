@@ -5,6 +5,7 @@ import com.snick.weather.R
 import com.snick.weather.core.ResourceManager
 import com.snick.weather.currentWeather.data.WeatherData
 import com.snick.weather.currentWeather.presentation.CurrentWeatherUi
+import javax.inject.Inject
 
 interface WeatherDomainToUiMapper {
 
@@ -12,7 +13,7 @@ interface WeatherDomainToUiMapper {
     fun map(e: ApplicationExceptions): CurrentWeatherUi
 
 
-    class Base(
+    class Base @Inject constructor (
         private val resourceManager: ResourceManager
     ) : WeatherDomainToUiMapper {
 

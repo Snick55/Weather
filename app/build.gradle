@@ -29,12 +29,17 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs += [
+                "-Xjvm-default=all",
+        ]
     }
 
     viewBinding{
         enabled = true
     }
 }
+
+
 
 dependencies {
 
@@ -55,5 +60,10 @@ dependencies {
 
     implementation 'com.google.dagger:dagger:2.38.1'
     kapt 'com.google.dagger:dagger-compiler:2.38.1'
+
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.5.1'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
+
+    implementation 'androidx.fragment:fragment-ktx:1.5.5'
 
 }

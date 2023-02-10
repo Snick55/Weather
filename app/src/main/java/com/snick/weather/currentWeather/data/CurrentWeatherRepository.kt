@@ -2,12 +2,13 @@ package com.snick.weather.currentWeather.data
 
 import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSource
 import com.snick.weather.currentWeather.domain.CurrentWeatherDomain
+import javax.inject.Inject
 
 interface CurrentWeatherRepository {
 
     suspend fun fetchCurrentWeather(city: String): CurrentWeatherDomain
 
-    class Base(
+    class Base @Inject constructor (
         private val cloudDataSource: CloudWeatherDataSource,
         private val mapper: WeatherDataToDomainMapper
     ) : CurrentWeatherRepository {

@@ -4,13 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-
 import com.snick.weather.currentWeather.domain.WeatherDomainToUiMapper
 import com.snick.weather.currentWeather.domain.WeatherInteractor
 import com.snick.weather.currentWeather.presentation.CurrentWeatherUi
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class WeatherViewModel(
+
+class WeatherViewModel @Inject constructor (
     private val interactor: WeatherInteractor,
     private val mapper: WeatherDomainToUiMapper
 ): ViewModel() {

@@ -1,6 +1,7 @@
 package com.snick.weather.currentWeather.presentation.main
 
 import android.app.AlertDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,15 +9,23 @@ import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.ViewModelProvider
 import com.snick.weather.core.WeatherApp
+import com.snick.weather.core.appComponent
 import com.snick.weather.currentWeather.presentation.CurrentWeatherUi
 import com.snick.weather.databinding.WeatherFragmentBinding
+import javax.inject.Inject
 
 class WeatherFragment : Fragment() {
 
     private lateinit var binding: WeatherFragmentBinding
-    private lateinit var viewModel: WeatherViewModel
     private lateinit var city: String
+
+
+    @Inject
+     lateinit var viewModel: WeatherViewModel
+
 
 
     override fun onCreateView(
@@ -24,9 +33,9 @@ class WeatherFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        requireContext().appComponent.inject(this)
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
          city = arguments?.getString(CITY_KEY)?: ""
-        viewModel = (requireContext().applicationContext as WeatherApp).weatherViewModel
         viewModel.fetchWeather(city)
         return binding.root
     }

@@ -2,6 +2,7 @@ package com.snick.weather.currentWeather.di
 
 import com.snick.weather.currentWeather.data.CurrentWeatherRepository
 import com.snick.weather.currentWeather.domain.WeatherInteractor
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 
