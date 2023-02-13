@@ -9,6 +9,7 @@ import com.snick.weather.R
 import com.snick.weather.currentWeather.presentation.main.WeatherFragment
 import com.snick.weather.databinding.ChooseCityFragmentBinding
 
+
 class ChooseCityFragment: Fragment() {
 
     private lateinit var binding: ChooseCityFragmentBinding
@@ -25,7 +26,7 @@ class ChooseCityFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.acceptBtn.setOnClickListener {
-            val text = binding.cityTv.text.toString()
+            val text = binding.cityTv.text.toString().replace(" ", "")
             if (text.isBlank()) return@setOnClickListener
             val fragment = WeatherFragment.newInstance(text)
             parentFragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit()

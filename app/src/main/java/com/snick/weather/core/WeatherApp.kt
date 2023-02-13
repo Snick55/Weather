@@ -4,12 +4,10 @@ import android.app.Application
 import android.content.Context
 import com.snick.weather.currentWeather.di.AppComponent
 import com.snick.weather.currentWeather.di.DaggerAppComponent
-import com.snick.weather.currentWeather.presentation.main.WeatherViewModel
 
 
 class WeatherApp: Application() {
 
-  lateinit var weatherViewModel: WeatherViewModel
     lateinit var appComponent: AppComponent
 
             override fun onCreate() {

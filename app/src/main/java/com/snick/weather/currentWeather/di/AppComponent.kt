@@ -7,7 +7,7 @@ import dagger.Component
 
 
 @Component(modules = [NetworkModule::class, MappersModule::class, RepositoryModule::class,
-    DomainModule::class, ViewModelModule::class, AppModule::class])
+    DomainModule::class, ViewModelModule::class, AppModule::class,CommunicationModule::class])
 interface AppComponent {
 
 
