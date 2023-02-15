@@ -26,7 +26,7 @@ class ChooseCityFragment: Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.acceptBtn.setOnClickListener {
-            val text = binding.cityTv.text.toString().replace(" ", "")
+            val text = binding.cityTv.text.toString().trim()
             if (text.isBlank()) return@setOnClickListener
             val fragment = WeatherFragment.newInstance(text)
             parentFragmentManager.beginTransaction().replace(R.id.fragment_container,fragment).commit()

@@ -94,7 +94,7 @@ class WeatherFragment : Fragment() {
             val dialogBuilder = AlertDialog.Builder(requireContext())
             DialogManager.changePass(dialogBuilder){
                 if (it.isBlank()) return@changePass
-                viewModel.fetchWeather(it)
+                viewModel.fetchWeather(it.trim())
                     changeProgress(binding.progressBar)
             }
         }
