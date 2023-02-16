@@ -1,6 +1,7 @@
 package com.snick.weather.currentWeather.data
 
 import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSource
+import com.snick.weather.currentWeather.data.mappers.WeatherDataToDomainMapper
 import com.snick.weather.currentWeather.domain.*
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert.*
@@ -77,7 +78,7 @@ class CurrentCurrentWeatherDataRepositoryTest{
 
     class DataToDomainMapper(
         private val appException: ApplicationExceptions
-    ) : WeatherDataToDomainMapper{
+    ) : WeatherDataToDomainMapper {
         override fun map(weatherData: WeatherData): CurrentWeatherDomain {
            return CurrentWeatherDomain.Success(weatherData.toDomain())
         }

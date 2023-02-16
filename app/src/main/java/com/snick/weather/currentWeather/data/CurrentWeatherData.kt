@@ -1,6 +1,6 @@
 package com.snick.weather.currentWeather.data
 
-import android.util.Log
+import com.snick.weather.currentWeather.data.mappers.WeatherDataToDomainMapper
 import com.snick.weather.currentWeather.domain.CurrentWeatherDomain
 import java.lang.Exception
 

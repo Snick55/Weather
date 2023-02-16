@@ -1,5 +1,6 @@
-package com.snick.weather.currentWeather.data
+package com.snick.weather.currentWeather.data.mappers
 
+import com.snick.weather.currentWeather.data.WeatherData
 import com.snick.weather.currentWeather.domain.NoInternetConnectionException
 import com.snick.weather.currentWeather.domain.ServiceUnavailableException
 import com.snick.weather.currentWeather.domain.WeatherApiException
