@@ -39,7 +39,10 @@ class WeatherFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val adapter = CitiesAdapter()
+        viewModel.cities.observe(viewLifecycleOwner){
 
+        }
         val cityTextView = binding.cityNameTv
         val temp = binding.temp
         val weatherDescription = binding.weatherDescription
