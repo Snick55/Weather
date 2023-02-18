@@ -3,6 +3,7 @@ package com.snick.weather.currentWeather.data.cache
 import com.snick.weather.currentWeather.data.CityData
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
+import javax.inject.Inject
 
 interface CacheCityDataSource {
 
@@ -13,7 +14,7 @@ interface CacheCityDataSource {
     suspend fun  deleteCity(city: CityData)
 
 
-    class Base(
+    class Base @Inject constructor (
         private val dao: CitiesDao
     ): CacheCityDataSource{
 

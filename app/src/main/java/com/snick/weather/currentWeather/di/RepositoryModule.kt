@@ -1,8 +1,10 @@
 package com.snick.weather.currentWeather.di
 
 import com.snick.weather.currentWeather.data.CurrentWeatherRepository
+import com.snick.weather.currentWeather.data.cache.CacheCityDataSource
 import com.snick.weather.currentWeather.data.mappers.WeatherDataToDomainMapper
 import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSource
+import com.snick.weather.currentWeather.data.mappers.CityDataToDomainMapper
 import dagger.Module
 import dagger.Provides
 
@@ -12,9 +14,11 @@ class RepositoryModule {
     @Provides
     fun provideCurrentWeatherRepository(
         cloudWeatherDataSource: CloudWeatherDataSource,
-        mapper: WeatherDataToDomainMapper
+        mapper: WeatherDataToDomainMapper,
+        cacheCityDataSource: CacheCityDataSource,
+        cityDataToDomainMapper: CityDataToDomainMapper
     ): CurrentWeatherRepository{
-        return CurrentWeatherRepository.Base(cloudWeatherDataSource,mapper)
+        return CurrentWeatherRepository.Base(cloudWeatherDataSource,mapper,cacheCityDataSource,cityDataToDomainMapper)
     }
 
 }

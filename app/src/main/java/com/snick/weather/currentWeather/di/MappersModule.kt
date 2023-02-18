@@ -1,6 +1,7 @@
 package com.snick.weather.currentWeather.di
 
 import com.snick.weather.core.ResourceManager
+import com.snick.weather.currentWeather.data.mappers.CityDataToDomainMapper
 import com.snick.weather.currentWeather.data.mappers.WeatherDataToDomainMapper
 import com.snick.weather.currentWeather.domain.WeatherDomainToUiMapper
 import dagger.Module
@@ -20,5 +21,10 @@ class MappersModule {
         resourceManager: ResourceManager
     ): WeatherDomainToUiMapper{
         return WeatherDomainToUiMapper.Base(resourceManager)
+    }
+
+    @Provides
+    fun provideCityDataToDomainMapper(): CityDataToDomainMapper{
+        return CityDataToDomainMapper.Base()
     }
 }

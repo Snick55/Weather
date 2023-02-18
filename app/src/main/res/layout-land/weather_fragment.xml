@@ -13,23 +13,24 @@
 
         <ImageView
             android:id="@+id/change_city_btn"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
             android:layout_width="40dp"
             android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
             android:src="@drawable/ic_change_city"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
             android:id="@+id/content_top"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
             android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
             <TextView
                 android:id="@+id/city_name_tv"
                 android:layout_width="wrap_content"
@@ -55,59 +56,77 @@
 
         </LinearLayout>
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/main_recycler"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/content_top"
+            tools:listitem="@layout/city_item" />
 
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/icon_group"
-            android:layout_marginTop="165dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="165dp"
             android:orientation="vertical"
+            android:visibility="gone"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
-                android:src="@drawable/ic_temp"
                 android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:layout_height="40dp"
+                android:src="@drawable/ic_temp" />
+
             <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="10dp"
-                android:src="@drawable/ic_temp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:src="@drawable/ic_temp" />
+
             <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="7dp"
-                android:src="@drawable/ic_humidity"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:src="@drawable/ic_humidity" />
+
             <ImageView
-                android:src="@drawable/ic_cloudy"
                 android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:layout_height="40dp"
+                android:src="@drawable/ic_cloudy" />
+
             <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/ic_pressure"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:src="@drawable/ic_pressure" />
+
             <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="8dp"
-                android:src="@drawable/ic_visibility"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:src="@drawable/ic_visibility" />
+
             <ImageView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginTop="5dp"
-                android:src="@drawable/ic_wind_speed"
-                android:layout_width="40dp"
-                android:layout_height="40dp"/>
+                android:src="@drawable/ic_wind_speed" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginStart="50dp"
             android:id="@+id/content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="50dp"
             android:layout_marginTop="150dp"
             android:orientation="vertical"
             app:layout_constraintStart_toStartOf="parent"
@@ -172,54 +191,55 @@
 
             <View
                 android:layout_width="match_parent"
-                android:layout_height="20dp"/>
+                android:layout_height="20dp" />
 
         </LinearLayout>
 
 
         <LinearLayout
-            android:visibility="gone"
             android:id="@+id/error_container"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            android:orientation="vertical"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <TextView
                 android:id="@+id/error_message"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:textColor="@color/purple_text"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                tools:text="Проверьте интернет соединение"/>
+                tools:text="Проверьте интернет соединение" />
+
             <View
-                android:background="@color/black"
                 android:layout_width="match_parent"
-                android:layout_height="2dp"/>
+                android:layout_height="2dp"
+                android:background="@color/black" />
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/try_again_btn"
-                app:cornerRadius="8dp"
-                android:layout_marginTop="15dp"
-                android:layout_gravity="center"
-                android:textColor="#34AACD"
-                android:backgroundTint="#135568"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/try_again"/>
+                android:layout_gravity="center"
+                android:layout_marginTop="15dp"
+                android:backgroundTint="#135568"
+                android:text="@string/try_again"
+                android:textColor="#34AACD"
+                app:cornerRadius="8dp" />
 
         </LinearLayout>
 
         <ProgressBar
-            android:visibility="gone"
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -227,7 +247,6 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </ScrollView>

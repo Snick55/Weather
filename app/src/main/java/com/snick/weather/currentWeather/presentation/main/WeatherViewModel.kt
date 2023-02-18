@@ -1,5 +1,6 @@
 package com.snick.weather.currentWeather.presentation.main
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.snick.weather.currentWeather.domain.WeatherDomainToUiMapper
 import com.snick.weather.currentWeather.domain.WeatherInteractor
@@ -23,7 +24,11 @@ class WeatherViewModel @Inject constructor (
         communication.show(weatherDomain.map(mapper))
     }
 
-    fun getCachedCities()= viewModelScope.launch {
+    init {
+        getCachedCities()
+    }
+
+   private fun getCachedCities()= viewModelScope.launch {
         val res  = ArrayList<CityUi>()
         res.add(CityUi.AddCity())
         interactor.getSavedCities().collect{
@@ -32,6 +37,7 @@ class WeatherViewModel @Inject constructor (
             }))
         }
         _cities.value = res
+
     }
 
 

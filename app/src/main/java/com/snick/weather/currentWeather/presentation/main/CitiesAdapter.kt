@@ -6,6 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.snick.weather.currentWeather.presentation.CityUi
+import com.snick.weather.databinding.AddItemBinding
+import com.snick.weather.databinding.CityItemBinding
 
 class CitiesAdapter: RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder>() {
 
@@ -52,7 +54,7 @@ class CitiesAdapter: RecyclerView.Adapter<CitiesAdapter.CitiesViewHolder>() {
 
        class City(private val binding: CityItemBinding): CitiesViewHolder(binding.root){
            override fun bind(ui: CityUi) {
-               ui.show(binding.somename)
+               ui.show(binding.city)
            }
        }
 

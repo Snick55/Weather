@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.button.MaterialButton xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/city"
+    android:layout_marginHorizontal="5dp"
+    android:layout_width="wrap_content"
+    android:textSize="12sp"
+    android:layout_height="40dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:backgroundTint="@color/warm_red"
+    tools:text = "Saints-Petersburg"
+    android:background="@null"
+    app:cornerRadius="16dp">
+
+</com.google.android.material.button.MaterialButton>

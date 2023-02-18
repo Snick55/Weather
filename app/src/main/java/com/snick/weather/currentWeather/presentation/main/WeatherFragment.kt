@@ -2,12 +2,15 @@ package com.snick.weather.currentWeather.presentation.main
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ProgressBar
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.snick.weather.core.appComponent
 import com.snick.weather.currentWeather.presentation.CurrentWeatherUi
 import com.snick.weather.databinding.WeatherFragmentBinding
@@ -23,7 +26,6 @@ class WeatherFragment : Fragment() {
     lateinit var viewModel: WeatherViewModel
 
 
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -31,7 +33,7 @@ class WeatherFragment : Fragment() {
     ): View {
         requireContext().appComponent.inject(this)
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
-         city = arguments?.getString(CITY_KEY)?: ""
+        city = arguments?.getString(CITY_KEY) ?: ""
         viewModel.fetchWeather(city)
         return binding.root
     }
@@ -40,8 +42,12 @@ class WeatherFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val adapter = CitiesAdapter()
-        viewModel.cities.observe(viewLifecycleOwner){
+        val recyclerView = binding.mainRecycler
+        recyclerView.adapter = adapter
 
+        viewModel.cities.observe(viewLifecycleOwner) {
+            Log.d("TAG"," in adapter come ${it.isEmpty()}")
+            adapter.setUpAdapter(it)
         }
         val cityTextView = binding.cityNameTv
         val temp = binding.temp
@@ -95,16 +101,16 @@ class WeatherFragment : Fragment() {
 
         binding.changeCityBtn.setOnClickListener {
             val dialogBuilder = AlertDialog.Builder(requireContext())
-            DialogManager.changePass(dialogBuilder){
+            DialogManager.changePass(dialogBuilder) {
                 if (it.isBlank()) return@changePass
                 viewModel.fetchWeather(it.trim())
-                    changeProgress(binding.progressBar)
+                changeProgress(binding.progressBar)
             }
         }
 
     }
 
-    private fun changeProgress(progressBar: ProgressBar){
+    private fun changeProgress(progressBar: ProgressBar) {
         if (progressBar.visibility == View.VISIBLE)
             progressBar.visibility = View.GONE
         else progressBar.visibility = View.VISIBLE
