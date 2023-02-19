@@ -1,5 +1,6 @@
 package com.snick.weather.currentWeather.domain
 
+import android.util.Log
 import com.snick.weather.currentWeather.data.CityData
 import com.snick.weather.currentWeather.data.CurrentWeatherRepository
 import kotlinx.coroutines.flow.Flow
@@ -25,6 +26,7 @@ interface WeatherInteractor {
         }
 
         override fun getSavedCities(): Flow<List<CityDomain>> {
+            Log.d("TAG","interactor is called ")
             return repository.getSavedCities()
         }
 

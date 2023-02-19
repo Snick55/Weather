@@ -24,26 +24,36 @@ class WeatherViewModel @Inject constructor (
         communication.show(weatherDomain.map(mapper))
     }
 
-    init {
-        getCachedCities()
-    }
 
-   private fun getCachedCities()= viewModelScope.launch {
+
+    fun getCachedCities()= viewModelScope.launch {
         val res  = ArrayList<CityUi>()
         res.add(CityUi.AddCity())
-        interactor.getSavedCities().collect{
+       _cities.value = res
+        interactor.getSavedCities()
+            .collect{
+            res.clear()
+            res.add(CityUi.AddCity())
             res.addAll((it.map {cityDomain ->
             cityDomain.toUi()
             }))
         }
         _cities.value = res
-
     }
 
 
+    fun removeCity(name: String) = viewModelScope.launch {
+        val cityUi = CityUi.City(name)
+        interactor.deleteCity(cityUi.toDomain())
+    }
+
+     fun saveCity(name: String) = viewModelScope.launch {
+         val cityUi = CityUi.City(name)
+         interactor.saveCity(cityUi.toDomain())
+     }
 
 
-    fun observeState(owner: LifecycleOwner,observer: Observer<CurrentWeatherUi>){
+    fun observeState(owner: LifecycleOwner, observer: Observer<CurrentWeatherUi>){
         communication.observe(owner, observer)
     }
 

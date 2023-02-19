@@ -12,12 +12,13 @@
         android:orientation="vertical">
 
         <ImageView
-            android:id="@+id/change_city_btn"
+            android:visibility="gone"
+            android:id="@+id/remove_city_btn"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_marginTop="5dp"
             android:layout_marginEnd="10dp"
-            android:src="@drawable/ic_change_city"
+            android:src="@drawable/ic_remove"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 

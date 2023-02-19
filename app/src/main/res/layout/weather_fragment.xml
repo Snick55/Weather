@@ -9,12 +9,13 @@
 
 
     <ImageView
-        android:id="@+id/change_city_btn"
+        android:visibility="gone"
+        android:id="@+id/remove_city_btn"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginTop="5dp"
         android:layout_marginEnd="10dp"
-        android:src="@drawable/ic_change_city"
+        android:src="@drawable/ic_remove"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -55,16 +56,16 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/main_recycler"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/content_top"
-        tools:listitem="@layout/city_item" />
+        tools:itemCount="1"
+        tools:listitem="@layout/add_item" />
 
     <LinearLayout
         android:id="@+id/icon_group"
