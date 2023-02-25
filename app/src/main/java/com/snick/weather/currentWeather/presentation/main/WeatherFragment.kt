@@ -66,11 +66,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
             when (it) {
                 is CurrentWeatherUi.Loading -> changeProgress(binding.progressBar)
                 is CurrentWeatherUi.Success -> {
-                    binding.contentTop.visibility = View.VISIBLE
-                    binding.content.visibility = View.VISIBLE
-                    binding.errorContainer.visibility = View.GONE
-                    binding.iconGroup.visibility = View.VISIBLE
-                    changeProgress(binding.progressBar)
+                   renderVisibility(true)
                     it.render(
                         cityTextView,
                         weatherDescription,
@@ -85,11 +81,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
 
                 }
                 else -> {
-                    binding.contentTop.visibility = View.GONE
-                    binding.content.visibility = View.GONE
-                    binding.iconGroup.visibility = View.GONE
-                    binding.errorContainer.visibility = View.VISIBLE
-                    changeProgress(binding.progressBar)
+                   renderVisibility(false)
                     it.handleError(binding.errorMessage)
                 }
             }
@@ -102,10 +94,29 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
         }
 
         binding.removeCityBtn.setOnClickListener {
-            Log.d("TAG", " cityName = $cityName , city = $city")
             viewModel.removeCity(cityName?: city)
         }
 
+    }
+
+    private fun renderVisibility(isSuccess: Boolean){
+        if (isSuccess) {
+            binding.contentTop.visibility = View.VISIBLE
+            binding.content.visibility = View.VISIBLE
+            binding.errorContainer.visibility = View.GONE
+            binding.iconGroup.visibility = View.VISIBLE
+        }else{
+            binding.contentTop.visibility = View.GONE
+            binding.content.visibility = View.GONE
+            binding.iconGroup.visibility = View.GONE
+            binding.errorContainer.visibility = View.VISIBLE
+        }
+        changeProgress(binding.progressBar)
+    }
+
+    private fun hideContent(){
+        binding.content.visibility = View.GONE
+        binding.iconGroup.visibility = View.GONE
     }
 
     private fun changeProgress(progressBar: ProgressBar) {
@@ -120,13 +131,18 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
                 val name = cityUi.name
                 cityName = name
                 viewModel.fetchWeather(name)
+                hideContent()
+                changeProgress(binding.progressBar)
             }
             else -> {
                 val dialogBuilder = AlertDialog.Builder(requireContext())
                 DialogManager.addCity(dialogBuilder) {
                     if (it.isBlank()) return@addCity
-                    viewModel.fetchWeather(it.trim())
-                    viewModel.saveCity(it.trim())
+                    val name  = it.trim()
+                    viewModel.fetchWeather(name)
+                    viewModel.saveCity(name)
+                    cityName = name
+                    hideContent()
                     changeProgress(binding.progressBar)
                 }
             }
