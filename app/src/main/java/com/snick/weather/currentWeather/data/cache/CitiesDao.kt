@@ -9,8 +9,8 @@ interface CitiesDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCity(city: CacheCity)
 
-    @Delete
-    suspend fun deleteCity(city: CacheCity)
+    @Query("DELETE FROM cities WHERE city_name = :name")
+    suspend fun deleteCity(name: String)
 
     @Query("SELECT * FROM cities")
     fun getCities(): Flow<List<CacheCity>>

@@ -6,6 +6,8 @@ import com.snick.weather.currentWeather.domain.WeatherDomainToUiMapper
 import com.snick.weather.currentWeather.domain.WeatherInteractor
 import com.snick.weather.currentWeather.presentation.CityUi
 import com.snick.weather.currentWeather.presentation.CurrentWeatherUi
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -31,14 +33,15 @@ class WeatherViewModel @Inject constructor (
         res.add(CityUi.AddCity())
        _cities.value = res
         interactor.getSavedCities()
+            .shareIn(viewModelScope, SharingStarted.Lazily,100)
             .collect{
             res.clear()
             res.add(CityUi.AddCity())
             res.addAll((it.map {cityDomain ->
             cityDomain.toUi()
             }))
-        }
-        _cities.value = res
+                _cities.value = res
+            }
     }
 
 

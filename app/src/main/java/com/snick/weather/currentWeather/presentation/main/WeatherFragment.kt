@@ -102,6 +102,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
         }
 
         binding.removeCityBtn.setOnClickListener {
+            Log.d("TAG", " cityName = $cityName , city = $city")
             viewModel.removeCity(cityName?: city)
         }
 
