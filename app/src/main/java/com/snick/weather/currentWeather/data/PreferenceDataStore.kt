@@ -11,8 +11,6 @@ interface PreferenceDataStore {
     class Base @Inject constructor (private val sharedPreferences: SharedPreferences): PreferenceDataStore{
 
         override fun saveLastQuery(cityName: String) {
-            Log.d("TAG","VALUE IN DATASTORE SAVE = $cityName")
-
             sharedPreferences.edit().putString(KEY_City,cityName).apply()
         }
 
