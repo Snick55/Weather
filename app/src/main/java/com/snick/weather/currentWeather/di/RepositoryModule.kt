@@ -1,6 +1,7 @@
 package com.snick.weather.currentWeather.di
 
 import com.snick.weather.currentWeather.data.CurrentWeatherRepository
+import com.snick.weather.currentWeather.data.PreferenceDataStore
 import com.snick.weather.currentWeather.data.cache.CacheCityDataSource
 import com.snick.weather.currentWeather.data.mappers.WeatherDataToDomainMapper
 import com.snick.weather.currentWeather.data.cloud.CloudWeatherDataSource
@@ -16,9 +17,10 @@ class RepositoryModule {
         cloudWeatherDataSource: CloudWeatherDataSource,
         mapper: WeatherDataToDomainMapper,
         cacheCityDataSource: CacheCityDataSource,
-        cityDataToDomainMapper: CityDataToDomainMapper
+        cityDataToDomainMapper: CityDataToDomainMapper,
+        preferenceDataStore: PreferenceDataStore
     ): CurrentWeatherRepository{
-        return CurrentWeatherRepository.Base(cloudWeatherDataSource,mapper,cacheCityDataSource,cityDataToDomainMapper)
+        return CurrentWeatherRepository.Base(cloudWeatherDataSource,mapper,cacheCityDataSource,cityDataToDomainMapper,preferenceDataStore)
     }
 
 }

@@ -1,6 +1,7 @@
 package com.snick.weather.currentWeather.di
 
 import android.content.Context
+import com.snick.weather.MainActivity
 import com.snick.weather.currentWeather.presentation.main.WeatherFragment
 import dagger.BindsInstance
 import dagger.Component
@@ -12,6 +13,7 @@ interface AppComponent {
 
 
     fun inject(weatherFragment: WeatherFragment)
+    fun inject(mainActivity: MainActivity)
 
 
     @Component.Builder

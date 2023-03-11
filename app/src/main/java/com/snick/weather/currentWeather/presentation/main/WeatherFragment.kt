@@ -19,7 +19,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
 
     private lateinit var binding: WeatherFragmentBinding
     private lateinit var city: String
-    private  var cityName: String? = null
+    private var cityName: String? = null
 
 
     @Inject
@@ -33,8 +33,8 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
     ): View {
         requireContext().appComponent.inject(this)
         binding = WeatherFragmentBinding.inflate(inflater, container, false)
-        city = arguments?.getString(CITY_KEY) ?: ""
-        viewModel.fetchWeather(city)
+
+
         viewModel.getCachedCities()
         return binding.root
     }
@@ -42,13 +42,15 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        city = arguments?.getString(CITY_KEY) ?: viewModel.lastCity()
+        viewModel.fetchWeather(city)
         val adapter = CitiesAdapter(this)
         val recyclerView = binding.mainRecycler
         recyclerView.adapter = adapter
 
         viewModel.cities.observe(viewLifecycleOwner) {
-            Log.d("TAG", "list size = ${it.size}")
-            if (it.size > 1) binding.removeCityBtn.visibility = View.VISIBLE
+            if (it.size == 1) binding.removeCityBtn.visibility =
+                View.GONE else binding.removeCityBtn.visibility = View.VISIBLE
             adapter.setUpAdapter(it)
         }
         val cityTextView = binding.cityNameTv
@@ -64,9 +66,12 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
 
         viewModel.observeState(viewLifecycleOwner) {
             when (it) {
-                is CurrentWeatherUi.Loading -> changeProgress(binding.progressBar)
+                is CurrentWeatherUi.Loading -> {
+                    binding.removeCityBtn.visibility = View.GONE
+                    changeProgress(binding.progressBar)
+                }
                 is CurrentWeatherUi.Success -> {
-                   renderVisibility(true)
+                    renderVisibility(true)
                     it.render(
                         cityTextView,
                         weatherDescription,
@@ -81,7 +86,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
 
                 }
                 else -> {
-                   renderVisibility(false)
+                    renderVisibility(false)
                     it.handleError(binding.errorMessage)
                 }
             }
@@ -94,18 +99,18 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
         }
 
         binding.removeCityBtn.setOnClickListener {
-            viewModel.removeCity(cityName?: city)
+            viewModel.removeCity(cityName ?: city)
         }
 
     }
 
-    private fun renderVisibility(isSuccess: Boolean){
+    private fun renderVisibility(isSuccess: Boolean) {
         if (isSuccess) {
             binding.contentTop.visibility = View.VISIBLE
             binding.content.visibility = View.VISIBLE
             binding.errorContainer.visibility = View.GONE
             binding.iconGroup.visibility = View.VISIBLE
-        }else{
+        } else {
             binding.contentTop.visibility = View.GONE
             binding.content.visibility = View.GONE
             binding.iconGroup.visibility = View.GONE
@@ -114,7 +119,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
         changeProgress(binding.progressBar)
     }
 
-    private fun hideContent(){
+    private fun hideContent() {
         binding.content.visibility = View.GONE
         binding.iconGroup.visibility = View.GONE
     }
@@ -130,6 +135,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
             is CityUi.City -> {
                 val name = cityUi.name
                 cityName = name
+                viewModel.save(name)
                 viewModel.fetchWeather(name)
                 hideContent()
                 changeProgress(binding.progressBar)
@@ -138,10 +144,10 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
                 val dialogBuilder = AlertDialog.Builder(requireContext())
                 DialogManager.addCity(dialogBuilder) {
                     if (it.isBlank()) return@addCity
-                    val name  = it.trim()
+                    val name = it.trim()
                     viewModel.fetchWeather(name)
                     viewModel.saveCity(name)
-                    cityName = name
+                    viewModel.save(name)
                     hideContent()
                     changeProgress(binding.progressBar)
                 }

@@ -20,11 +20,16 @@ interface CurrentWeatherRepository {
 
      suspend fun deleteCity(cityData: CityData)
 
+     fun saveLastCity(cityName:String)
+
+     fun getLastCity(): String
+
     class Base @Inject constructor(
         private val cloudDataSource: CloudWeatherDataSource,
         private val weatherMapper: WeatherDataToDomainMapper,
         private val cacheDataSource: CacheCityDataSource,
-        private val cityMapper: CityDataToDomainMapper
+        private val cityMapper: CityDataToDomainMapper,
+        private val preferenceDataStore: PreferenceDataStore
     ) : CurrentWeatherRepository {
 
         override suspend fun fetchCurrentWeather(city: String): CurrentWeatherDomain {
@@ -49,6 +54,17 @@ interface CurrentWeatherRepository {
         override suspend fun deleteCity(cityData: CityData) {
             cacheDataSource.deleteCity(cityData)
         }
+
+        override fun saveLastCity(cityName: String) {
+            preferenceDataStore.saveLastQuery(cityName)
+        }
+
+        override fun getLastCity(): String {
+            return preferenceDataStore.readLastQuery()
+        }
     }
+
+
+
 
 }

@@ -1,22 +1,22 @@
 package com.snick.weather.currentWeather.presentation.main
 
-import android.util.Log
+
 import androidx.lifecycle.*
+import com.snick.weather.currentWeather.domain.LastCityUseCase
 import com.snick.weather.currentWeather.domain.WeatherDomainToUiMapper
 import com.snick.weather.currentWeather.domain.WeatherInteractor
 import com.snick.weather.currentWeather.presentation.CityUi
 import com.snick.weather.currentWeather.presentation.CurrentWeatherUi
-import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.shareIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 
-class WeatherViewModel @Inject constructor (
+class WeatherViewModel @Inject constructor(
     private val interactor: WeatherInteractor,
     private val mapper: WeatherDomainToUiMapper,
-    private val communication: WeatherStateCommunication
-): ViewModel() {
+    private val communication: WeatherStateCommunication,
+    private val useCase: LastCityUseCase
+) : ViewModel() {
 
     private val _cities: MutableLiveData<List<CityUi>> = MutableLiveData()
     val cities: LiveData<List<CityUi>> = _cities
@@ -27,37 +27,44 @@ class WeatherViewModel @Inject constructor (
     }
 
 
-
-    fun getCachedCities()= viewModelScope.launch {
-        val res  = ArrayList<CityUi>()
+    fun getCachedCities() = viewModelScope.launch {
+        val res = ArrayList<CityUi>()
         res.add(CityUi.AddCity())
-       _cities.value = res
+        _cities.value = res
         interactor.getSavedCities()
-            .shareIn(viewModelScope, SharingStarted.Lazily,100)
-            .collect{
-            res.clear()
-            res.add(CityUi.AddCity())
-            res.addAll((it.map {cityDomain ->
-            cityDomain.toUi()
-            }))
+            .collect {
+                res.clear()
+                res.add(CityUi.AddCity())
+                res.addAll((it.map { cityDomain ->
+                    cityDomain.toUi()
+                }))
                 _cities.value = res
             }
+
     }
 
+
+    fun save(city: String){
+        useCase.save(city)
+    }
 
     fun removeCity(name: String) = viewModelScope.launch {
         val cityUi = CityUi.City(name)
         interactor.deleteCity(cityUi.toDomain())
     }
 
-     fun saveCity(name: String) = viewModelScope.launch {
-         val cityUi = CityUi.City(name)
-         interactor.saveCity(cityUi.toDomain())
-     }
+    fun saveCity(name: String) = viewModelScope.launch {
+        val cityUi = CityUi.City(name)
+        interactor.saveCity(cityUi.toDomain())
+    }
 
 
-    fun observeState(owner: LifecycleOwner, observer: Observer<CurrentWeatherUi>){
+    fun observeState(owner: LifecycleOwner, observer: Observer<CurrentWeatherUi>) {
         communication.observe(owner, observer)
+    }
+
+    fun lastCity(): String {
+        return useCase.execute()
     }
 
 }

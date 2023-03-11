@@ -1,7 +1,9 @@
 package com.snick.weather.currentWeather.di
 
 import android.content.Context
+import android.content.SharedPreferences
 import androidx.room.Room
+import com.snick.weather.currentWeather.data.PreferenceDataStore
 import com.snick.weather.currentWeather.data.cache.CacheCityDataSource
 import com.snick.weather.currentWeather.data.cache.CitiesDao
 import com.snick.weather.currentWeather.data.cache.CitiesDatabase
@@ -10,7 +12,7 @@ import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
 
-@Module
+@Module(includes = [AppModule::class])
 class CacheModule {
 
 
@@ -31,6 +33,11 @@ class CacheModule {
     @Provides
     fun provideCacheDataSourceDataSource(dao: CitiesDao): CacheCityDataSource {
         return CacheCityDataSource.Base(dao)
+    }
+
+    @Provides
+    fun providePreferenceDataStore(sharedPreferences: SharedPreferences): PreferenceDataStore{
+        return PreferenceDataStore.Base(sharedPreferences)
     }
 
 }
