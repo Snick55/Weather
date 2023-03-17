@@ -145,6 +145,7 @@ class WeatherFragment : Fragment(), CitiesAdapter.Listener {
                 DialogManager.addCity(dialogBuilder) {
                     if (it.isBlank()) return@addCity
                     val name = it.trim()
+                    cityName = name
                     viewModel.fetchWeather(name)
                     viewModel.saveCity(name)
                     viewModel.save(name)
